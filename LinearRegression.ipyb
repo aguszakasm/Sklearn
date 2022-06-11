@@ -1,0 +1,40 @@
+#mempersiapkan data
+import pandas as pd
+
+df2 = pd.read_csv('bensin2.csv')
+df2
+
+#menampilkan data statistik dataset
+df2.describe()
+
+#memisahkan training data dan test data
+import sklearn.model_selection as ms
+
+X = df2[['Liter','Penumpang','Suhu','Kecepatan']]
+y = df2[['Kilometer']]
+
+X_train, X_test, y_train, y_test = ms.train_test_split(X, y, test_size=0.1,random_state=0)
+print(X_train.size, X_test.size)
+
+#melatih model
+import sklearn.linear_model as lm
+
+model1 = lm.LinearRegression()
+model1.fit(X_train, y_train)
+
+#mengeluarkan nilai slope hasil perhitungan
+model1.coef_
+
+#mengeluarkan nilai intercept hasil perhitungan
+model1.intercept_
+
+#Menghitung Scoring Model
+r2 = model1.score(X_test, y_test)
+print(r2)
+
+import numpy as np
+
+#X = df2[['Liter','Penumpang','Suhu','Kecepatan']]
+data1 = np.array([[30,2,10,50]])
+hasil = model1.predict(data1)
+print(hasil)
